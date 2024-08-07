@@ -1,35 +1,44 @@
 import React, { useState } from 'react';
+import chroma from 'chroma-js';
 import Style from './Color.module.css';
 
 function Color() {
-
     const [color, setColor] = useState('#fff');
 
-    const handelColorChane=(e)=>{
+    const handleColorChange = (e) => {
         setColor(e.target.value);
-    }
+    };
 
-    return (<>
-        <div className={Style.Con}>
-            <div className={Style.container}>
+    const generateShades = (baseColor) => {
+        return chroma.scale([baseColor, '#0C0404']).mode('lab').colors(6);
+    };
 
-                <div className={`${Style.block} ${Style['dark-green']}`}></div>
-                <div className={`${Style.block} ${Style.green}`}></div>
-                <div className={`${Style.block} ${Style['light-green']}`}></div>
-                <div className={`${Style.block} ${Style['lighter-green']}`}></div>
-                <div className={`${Style.block} ${Style['lightest-green']}`}></div>
-            </div>
-            <div className={Style.ColorPickerCon}>
-                <h1>Color Picker</h1>
-                <div className={Style.ColorPickerDisplay}>
-                    <p>Selected Color: {color}</p>
+    const shades = generateShades(color);
+
+    return (
+        <>
+            <div className={Style.Con}>
+                <div className={Style.container}>
+                    <div className={Style.block} style={{ backgroundColor: shades[0] }}></div>
+                    <div className={Style.block} style={{ backgroundColor: shades[1] }}></div>
+                    <div className={Style.block} style={{ backgroundColor: shades[2] }}></div>
+                    <div className={Style.block} style={{ backgroundColor: shades[3] }}></div>
+                    <div className={Style.block} style={{ backgroundColor: shades[4] }}></div>
                 </div>
-                <label>Select a Color: </label>
-                <input type='color' value= {color} onChange={(e)=>handelColorChane(e)}/>
+                <div className={Style.ColorPickerCon}>
+                    <h1>Color Picker</h1>
+                    <div className={Style.ColorPickerDisplay}>
+                        <p>Selected Color: {color}</p>
+                    </div>
+                    <label>Select a Color: </label>
+                    <input
+                        type='color'
+                        value={color}
+                        onChange={handleColorChange}
+                    />
+                </div>
             </div>
-
-        </div>
-    </>
+        </>
     );
 }
 
