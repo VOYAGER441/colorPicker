@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import chroma from 'chroma-js';
 import Style from './Color.module.css';
 
